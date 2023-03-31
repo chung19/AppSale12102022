@@ -1,35 +1,30 @@
-package com.example.appsale12102022.utils;
+package com.example.appsale12102022.utils
 
-import android.content.Context;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.TextPaint;
-import android.text.style.ClickableSpan;
-import android.view.View;
+import android.content.Context
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.TextPaint
+import android.text.style.ClickableSpan
+import android.view.View
+import com.example.appsale12102022.R
 
-import androidx.annotation.NonNull;
-
-import com.example.appsale12102022.R;
-
-public class SpannedUtil {
-    public static SpannableStringBuilder setClickColorLink(String text, Context context, OnListenClick onListenClick) {
-        SpannableStringBuilder builder = new SpannableStringBuilder();
-        builder.append(text);
-        builder.setSpan(new ClickableSpan() {
-            @Override
-            public void onClick(@NonNull View view) {
-                onListenClick.onClick();
+object SpannedUtil {
+    fun setClickColorLink(
+        text: String?,
+        context: Context,
+        onListenClick: () -> Unit
+    ): SpannableStringBuilder {
+        val builder = SpannableStringBuilder()
+        builder.append(text)
+        builder.setSpan(object : ClickableSpan() {
+            override fun onClick(view: View) {
+                onListenClick()
             }
 
-            @Override
-            public void updateDrawState(@NonNull TextPaint ds) {
-                ds.setColor(context.getResources().getColor(R.color.primary));
+            override fun updateDrawState(ds: TextPaint) {
+                ds.color = context.resources.getColor(R.color.primary)
             }
-        }, 0, builder.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-        return builder;
-    }
-
-    public interface OnListenClick {
-        void onClick();
+        }, 0, builder.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+        return builder
     }
 }
